@@ -108,3 +108,21 @@ welcome_map = map(welcome_guest, guest_arrivals)
 
 guest_welcomes = [*welcome_map]
 print(*guest_welcomes, sep='\n')
+
+"""
+We should time to write more efficient code.
+To do that, use magic code '%timeit' in front of code at the iPython shell or Jupyter
+"""
+#Example codes
+%timeit formal_list = list()
+%timeit literal_list = []
+
+"""
+literal_list; 47.3 ns ± 5.37 ns per loop (mean ± std. dev. of 7 runs, 10000000 loops each)
+formal_list; 138 ns ± 14.6 ns per loop (mean ± std. dev. of 7 runs, 10000000 loops each)
+Making literal list is faster than making formal one
+"""
+"""
+time for one line code : %timeit
+time for multiple lines code : %%timeit
+"""
