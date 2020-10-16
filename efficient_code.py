@@ -126,3 +126,73 @@ Making literal list is faster than making formal one
 time for one line code : %timeit
 time for multiple lines code : %%timeit
 """
+
+"""
+Identify code time performance
+using %lprun
+"""
+import line_profiler
+import numpy as np
+heroes = ['A-Bomb', 'Abe Sapien', 'Abin Sur', 'Abomination', 'Absorbing Man', 
+          'Adam Strange', 'Agent 13', 'Agent Bob', 'Agent Zero', 'Air-Walker']
+hts_list = [203. , 191. , 185. , 203. , 193. , 185. , 173. , 178. , 191. ,188.]
+wts_list = [441.,  65.,  90., 441., 122.,  88.,  61.,  81., 104., 108.]
+
+hts = np.array(hts_list)
+wts = np.array(wts_list)
+
+# Prepare a function to profile
+def convert_units(heroes, weight, height):
+    """
+    convert units from lbs to ISO
+
+    Arguments:
+    heroes : name of hero
+    weight: weight of hero
+    height: height of hero
+
+    Returns:
+    hero_data: index and converted data
+    """
+
+    new_hts = [ht * 0.39370 for ht in height]
+    new_wts = [wt * 2.20462 for wt in weight]
+
+    hero_data = {}
+
+    for i, hero in enumerate(heroes):
+        hero_data[hero] = (new_hts[i], new_wts[i])
+
+    return hero_data
+
+"""
+To profile the convert_units(), use below 
+
+%load_ext line_profiler
+%lprun -f convert_units convert_units(heroes,wts,hts)
+"""
+
+# Modify the function by changing bottleneck
+def convert_units_broadcast(heroes, weight, height):
+    """
+    convert units from lbs to ISO
+
+    Arguments:
+    heroes : name of hero
+    weight: weight of hero
+    height: height of hero
+
+    Returns:
+    hero_data: index and converted data
+    """
+
+    # Change list comprihension to np.array 
+    new_hts = height * 0.39370
+    new_wts = weight * 2.20462 
+
+    hero_data = {}
+
+    for i, hero in enumerate(heroes):
+        hero_data[hero] = (new_hts[i], new_wts[i])
+
+    return hero_data
