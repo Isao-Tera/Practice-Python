@@ -196,3 +196,18 @@ def convert_units_broadcast(heroes, weight, height):
         hero_data[hero] = (new_hts[i], new_wts[i])
 
     return hero_data
+
+"""
+To profile memory usage in the code
+Use memory_profiler
+"""
+import memory_profiler
+
+#before using memory_profiler, import a function to be profiled
+from convert_unit import convert_units
+
+"""
+When using memory_profiler, execute below code in the Jupyter or iPyhotn shell 
+%load_ext memory_profiler
+%mprun -f convert_units convert_units(heroes, wts, hts)
+"""
