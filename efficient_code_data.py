@@ -25,6 +25,7 @@ secondary_types = ['Ice',
  "nan",
  'Flying',
 ]
+
 """
 combine all three lists into one list
 """#
@@ -72,15 +73,15 @@ misty_set = set(misty_pokedex)
 
 # Find the Pokémon that exist in both sets
 both = ash_set.intersection(misty_set)
-print(both)
+#print(both)
 
 # Find the Pokémon that Ash has, and Misty does not have
 ash_only = ash_set.difference(misty_set)
-print(ash_only)
+#print(ash_only)
 
 # Find the Pokémon that are in only one set (not both)
 unique_to_set = ash_set.symmetric_difference(misty_set)
-print(unique_to_set)
+#print(unique_to_set)
 
 # Extract uniqe value from a list
 uniue_names_set = set(names)
@@ -92,3 +93,44 @@ def find_unique_name(names):
         if name not in unique_names:
             unique_names.append(name)
     return unique_names
+
+
+"""
+Eliminating loops from the code
+"""
+poke_gens = [4,1,3,5,1,3,2,1,5,6]
+poke_names = [
+ 'Abomasnow',
+ 'Abra',
+ 'Absol',
+ 'Accelgor',
+ 'Aerodactyl',
+ 'Aggron',
+ 'Aipom',
+ 'Alakazam',
+ 'Alomomola',
+ 'Altaria']
+
+# make name and generation pair by for loop
+gen1_gen2_name_length_loop = []
+for name, gen in zip(poke_names, poke_gens):
+    if gen < 3:
+        name_length = len(name)
+        poke_tuple = (name, name_length)
+        gen1_gen2_name_length_loop.append(poke_tuple)
+#print(gen1_gen2_name_length_loop)
+
+# Using list complihension
+
+## 1. extract pokemon name for gen1 and gen2 as a list 
+gen1_gen2_list = [name for name, gen in zip(poke_names, poke_gens) if gen < 3]
+print(gen1_gen2_list)
+
+## 2. calculate length of name 
+gen1_gen2_name_length = [*map(len, gen1_gen2_list)]
+print(gen1_gen2_name_length)
+
+## 3. Add 1 and 2
+gen1_gen2_name_length_cono = [zip(gen1_gen2_list, gen1_gen2_name_length)]
+
+
