@@ -124,13 +124,51 @@ for name, gen in zip(poke_names, poke_gens):
 
 ## 1. extract pokemon name for gen1 and gen2 as a list 
 gen1_gen2_list = [name for name, gen in zip(poke_names, poke_gens) if gen < 3]
-print(gen1_gen2_list)
+#print(gen1_gen2_list)
 
 ## 2. calculate length of name 
 gen1_gen2_name_length = [*map(len, gen1_gen2_list)]
-print(gen1_gen2_name_length)
+#print(gen1_gen2_name_length)
 
 ## 3. Add 1 and 2
 gen1_gen2_name_length_cono = [zip(gen1_gen2_list, gen1_gen2_name_length)]
 
+"""
+Calculate total and average without loops
+"""
+import numpy as np
+stats_list = [[10, 20, 30, 40, 50, 60],
+              [10, 20, 30, 40, 50, 60],
+              [10, 20, 30, 40, 50, 60],
+              [10, 20, 30, 40, 50, 60],
+              [10, 20, 30, 40, 50, 60],
+              [10, 20, 30, 40, 50, 60],
+              [10, 20, 30, 40, 50, 60],
+              [10, 20, 30, 40, 50, 60],
+              [10, 20, 30, 40, 50, 60],
+              [10, 20, 30, 40, 50, 60]]
 
+stats = np.array(stats_list)
+
+# pokemon name and status combinataion when using loop
+poke_list = []
+for name, num in zip(names, stats):
+    total_stats = np.sum(num)
+    avg_stats = np.mean(num)
+    poke_list.append(name, total_stats, avg_stats)
+
+# No loop
+# Create a total stats array
+total_stats_np = np.sum(stats, axis=1)
+
+# Create an average stats array
+avg_stats_np = np.mean(stats, axis=1)
+
+# Combine names, total_stats_np, and avg_stats_np into a list
+poke_list_np = [*zip(names, total_stats_np, avg_stats_np)]
+
+print(poke_list_np == poke_list, '\n')
+print(poke_list_np[:3])
+print(poke_list[:3], '\n')
+top_3 = sorted(poke_list_np, key=lambda x: x[1], reverse=True)[:3]
+print('3 strongest Pokémon:\n{}'.format(top_3))
