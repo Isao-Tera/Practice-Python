@@ -43,3 +43,12 @@ for row in test.itertuples():
     visit = row.VISIT_NUM
     order = row.ORDER_NUM
     print(visit, order)
+    
+"""
+Apply a function to a column in the pandas dataframe
+with .apply()
+When we use .apply(), we do not need to use for loop
+"""
+
+# Gather sum of all columns
+test.apply(sum, axis=0)
