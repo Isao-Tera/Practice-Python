@@ -29,3 +29,17 @@ for i, row in test.iterrows():
 
 test["total_visit"] = total_visit
 print(test)
+
+"""
+Iterating with itertuples()
+"""
+# print pandas data 
+for i in test.itertuples():
+    print(i)
+
+# .itertuples() returns special data type that called namedtuple
+# To access row data, use a dot, No bracket 
+for row in test.itertuples():
+    visit = row.VISIT_NUM
+    order = row.ORDER_NUM
+    print(visit, order)
