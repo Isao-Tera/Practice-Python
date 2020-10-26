@@ -43,12 +43,26 @@ for row in test.itertuples():
     visit = row.VISIT_NUM
     order = row.ORDER_NUM
     print(visit, order)
-    
+
 """
 Apply a function to a column in the pandas dataframe
 with .apply()
 When we use .apply(), we do not need to use for loop
+The .apply() method let's you apply functions to all rows or columns of a DataFrame 
+by specifying an axis.
 """
 
 # Gather sum of all columns
 test.apply(sum, axis=0)
+
+# Sum of each row from two columns
+test[['VISIT_NUM', 'VISIT_PAGE_NUM']].apply(sum, axis=1)
+
+# Apply a lambda function
+def event_confirm(EVENT1):
+    if EVENT1 == 1:
+        return "YES"
+    else:
+        return "NO"
+
+test.apply(lambda row: event_confirm(row['EVENT1']), axis=1)
