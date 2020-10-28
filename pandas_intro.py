@@ -66,3 +66,45 @@ def event_confirm(EVENT1):
         return "NO"
 
 test.apply(lambda row: event_confirm(row['EVENT1']), axis=1)
+
+# Make a new colmun
+def total_order(purchase, units):
+    total = purchase * units
+    return total
+
+total = total_order(test['PURCHASE'].values, test['UNITS'].values)
+print(total)
+
+test['purchase_units'] = total
+test.head()
+
+"""
+Compared to three methods to make a new cokumn
+at the dataframe
+"""
+import numpy as np
+import pandas as pd
+
+#load data
+baseball_df = pd.read_csv('baseball.csv')
+
+#Make a function to predict 
+def predict_win_perc(RS, RA):
+    prediction = RS ** 2 / (RS ** 2 + RA ** 2)
+    return np.round(prediction, 2)
+
+# Use a loop and .itertuples() to collect each row's predicted win percentage
+win_perc_preds_loop = []
+for row in baseball_df.itertuples():
+    runs_scored = row.RS
+    runs_allowed = row.RA
+    win_perc_pred = predict_win_perc(runs_scored, runs_allowed)
+    win_perc_preds_loop.append(win_perc_pred)
+
+# Apply predict_win_perc to each row of the DataFrame
+win_perc_preds_apply = baseball_df.apply(lambda row: predict_win_perc(row['RS'], row['RA']), axis=1)
+
+# Calculate the win percentage predictions using NumPy arrays
+win_perc_preds_np = predict_win_perc(baseball_df['RS'].values, baseball_df['RA'].values)
+baseball_df['WP_preds'] = win_perc_preds_np
+print(baseball_df.head())
